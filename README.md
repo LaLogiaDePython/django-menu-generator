@@ -15,7 +15,6 @@ Generates **Simple Navigation** for Django projects/apps, while keeping it **DRY
 How to install
 ====================
 
-    1. easy_install django-menuware
     2. pip install django-menuware
     3. git clone http://github.com/un33k/django-menuware
         a. cd django-menuware
