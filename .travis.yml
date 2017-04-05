@@ -1,0 +1,23 @@
+language: python
+
+python:
+  -"3.6"
+  -"3.5"
+  -"3.4"
+  -"2.7"
+  -"pypy"
+
+env:
+  - DJANGO="django==1.11"
+  - DJANGO="django==1.10.7"
+  - DJANGO="django==1.9.13"
+  - DJANGO="django==1.8.18"
+
+install:
+  - pip install -r requirements.txt
+  - pip install coveralls
+
+script: coverage run manage.py test
+
+after_success:
+  coveralls
