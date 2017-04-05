@@ -184,14 +184,15 @@ X.Y.Z Version
     `MINOR` version -- when you add functionality in a backwards-compatible manner, and
     `PATCH` version -- when you make backwards-compatible bug fixes.
 
-[status-image]: https://secure.travis-ci.org/un33k/django-menuware.png?branch=master
-[status-link]: http://travis-ci.org/un33k/django-menuware?branch=master
+[status-image]: https://travis-ci.org/RADYConsultores/django-menu-generator.svg?branch=master
+[status-link]: https://travis-ci.org/RADYConsultores/django-menu-generator?branch=master
 
 [version-image]: https://img.shields.io/pypi/v/django-menuware.svg
 [version-link]: https://pypi.python.org/pypi/django-menuware
 
-[coverage-image]: https://coveralls.io/repos/un33k/django-menuware/badge.svg
-[coverage-link]: https://coveralls.io/r/un33k/django-menuware
+[coverage-image]: https://coveralls.io/repos/github/RADYConsultores/django-menu-generator/badge.svg?branch=master
+[coverage-link]: https://coveralls.io/github/RADYConsultores/django-menu-generator?branch=master
 
 [download-image]: https://img.shields.io/pypi/dm/django-menuware.svg
 [download-link]: https://pypi.python.org/pypi/django-menuware
+
