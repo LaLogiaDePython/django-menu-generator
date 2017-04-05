@@ -1,4 +1,4 @@
-Django Menuware
+Django Menu Generator
 ====================
 
 **A menu generating application for Django**
