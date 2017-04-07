@@ -15,20 +15,20 @@ Generates **Simple Navigation** for Django projects/apps, while keeping it **DRY
 How to install
 ====================
 
-    2. pip install django-menuware
-    3. git clone http://github.com/un33k/django-menuware
-        a. cd django-menuware
+    2. pip install django-menu-generator
+    3. git clone http://github.com/un33k/django-menu-generator
+        a. cd django-menu-generator
         b. run python setup.py
-    4. wget https://github.com/un33k/django-menuware/zipball/master
+    4. wget https://github.com/un33k/django-menu-generator/zipball/master
         a. unzip the downloaded file
-        b. cd into django-menuware-* directory
+        b. cd into django-menu-generator-* directory
         c. run python setup.py
 
 How to use
 ====================
-    1. Install `django-menuware` as per the above instructions.
-    2. Add `menuware` to your `INSTALLED_APPS`.
-    3. Add `{% load menuware %}` to templates that require it.
+    1. Install `django-menu-generator` as per the above instructions.
+    2. Add `menu-generator` to your `INSTALLED_APPS`.
+    3. Add `{% load menu-generator %}` to templates that require it.
 
    ```python
     ####################################################################################
@@ -50,17 +50,17 @@ How to use
         {
             "name": "Login",
             "url": "login_url_view",  # reversible
-            "validators": ["menuware.utils.is_anonymous"],
+            "validators": ["menu_generator.utils.is_anonymous"],
         },
         {
             "name": "Register",
             "url": "register_view_url",  # reversible
-            "validators": ["menuware.utils.is_anonymous"],
+            "validators": ["menu_generator.utils.is_anonymous"],
         },
         {
             "name": "Account",
             "url": "/acount",
-            "validators": ["menuware.utils.is_authenticated"],
+            "validators": ["menu_generator.utils.is_authenticated"],
             "submenu": [
                 {
                     "name": "Profile",
@@ -74,7 +74,7 @@ How to use
                 {
                     "name": "Account Secrets",
                     "url": "/account/secrets",
-                    "validators": ["menuware.utils.is_superuser"],
+                    "validators": ["menu_generator.utils.is_superuser"],
                 }
             ],
         },
@@ -103,7 +103,7 @@ Then in your template, load the template tag to generate your menu.
 
    ```html
     <!-- base.html -->
-    {% load menuware %}
+    {% load menu_generator %}
 
     <!DOCTYPE html>
     <html>
@@ -187,12 +187,12 @@ X.Y.Z Version
 [status-image]: https://travis-ci.org/RADYConsultores/django-menu-generator.svg?branch=master
 [status-link]: https://travis-ci.org/RADYConsultores/django-menu-generator?branch=master
 
-[version-image]: https://img.shields.io/pypi/v/django-menuware.svg
-[version-link]: https://pypi.python.org/pypi/django-menuware
+[version-image]: https://img.shields.io/pypi/v/django-menu-generator.svg
+[version-link]: https://pypi.python.org/pypi/django-menu-generator
 
 [coverage-image]: https://coveralls.io/repos/github/RADYConsultores/django-menu-generator/badge.svg?branch=master
 [coverage-link]: https://coveralls.io/github/RADYConsultores/django-menu-generator?branch=master
 
-[download-image]: https://img.shields.io/pypi/dm/django-menuware.svg
-[download-link]: https://pypi.python.org/pypi/django-menuware
+[download-image]: https://img.shields.io/pypi/dm/django-menu-generator.svg
+[download-link]: https://pypi.python.org/pypi/django-menu-generator
 
