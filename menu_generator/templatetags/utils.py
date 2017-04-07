@@ -1,5 +1,5 @@
 from django.conf import settings
-from menu_generator.utils import get_callable
+from ..utils import get_callable
 
 MENU_DICT = ".menus.MENUS"
 

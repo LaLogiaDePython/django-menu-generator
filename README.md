@@ -50,17 +50,17 @@ How to use
         {
             "name": "Login",
             "url": "login_url_view",  # reversible
-            "validators": ["menu_generator.utils.is_anonymous"],
+            "validators": ["menu_generator.validators.is_anonymous"],
         },
         {
             "name": "Register",
             "url": "register_view_url",  # reversible
-            "validators": ["menu_generator.utils.is_anonymous"],
+            "validators": ["menu_generator.validators.is_anonymous"],
         },
         {
             "name": "Account",
             "url": "/acount",
-            "validators": ["menu_generator.utils.is_authenticated"],
+            "validators": ["menu_generator.validators.is_authenticated"],
             "submenu": [
                 {
                     "name": "Profile",
@@ -74,7 +74,7 @@ How to use
                 {
                     "name": "Account Secrets",
                     "url": "/account/secrets",
-                    "validators": ["menu_generator.utils.is_superuser"],
+                    "validators": ["menu_generator.validators.is_superuser"],
                 }
             ],
         },
