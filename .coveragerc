@@ -1,0 +1,5 @@
+[run]
+source = menu_generator
+omit =
+    */tests/*
+    */apps.py

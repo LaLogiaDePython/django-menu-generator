@@ -2,7 +2,7 @@ from django.http import HttpRequest
 from django.test import TestCase
 
 from .utils import TestUser
-from ..utils import is_superuser, is_staff, is_authenticated, is_anonymous, user_has_permission
+from ..validators import is_superuser, is_staff, is_authenticated, is_anonymous, user_has_permission
 
 
 class ValidatorsTestCase(TestCase):

@@ -1,11 +1,8 @@
 import copy
-
-
-from django.core.urlresolvers import reverse
-from django.core.urlresolvers import NoReverseMatch
 from django.core.exceptions import ImproperlyConfigured
+from django.urls import reverse, NoReverseMatch
 
-from . import utils as util
+from .utils import get_callable
 
 
 class MenuBase(object):
@@ -19,14 +16,15 @@ class MenuBase(object):
     def save_user_state(self, request):
         """
         Given a request object, store the current user attributes
+        :param request: HttpRequest
         """
         self.request = request
         self.path = request.path
 
-    def is_validated(self, item_dict):
+    def _is_validated(self, item_dict):
         """
-        Given a menu item dictionary, it returns true if menu item should be only shown
-        to users if a set validators are true. (e.g. show if user is remember of admin group)
+        Given a menu item dictionary, it returns true if the user passes all the validator's conditions, it means,
+        if the user passes all the conditions, the user can see the menu
         """
         validators = item_dict.get('validators')
         if not validators:
@@ -35,32 +33,38 @@ class MenuBase(object):
         if not isinstance(validators, (list, tuple)):
             raise ImproperlyConfigured("validators must be a list")
 
-        for validate in validators:
-            if isinstance(validate, tuple):
-                if len(validate) <= 1:
-                    raise ImproperlyConfigured("You are passing a tuple validator with no params %s" % str(validate))
-                func = util.get_callable(validate[0])
+        for validator in validators:
+            if isinstance(validator, tuple):
+                if len(validator) <= 1:
+                    raise ImproperlyConfigured("You are passing a tuple validator without args %s" % str(validator))
+                func = get_callable(validator[0])
                 # Using a python slice to get all items after the first to build function args
-                args = validate[1:]
+                args = validator[1:]
+                # Pass the request as first arg by default
                 return func(self.request, *args)
             else:
-                func = util.get_callable(validate)
+                func = get_callable(validator)
                 return func or func(self.request) # pragma: no cover
 
-    def has_name(self, item_dict):
+    def _has_attr(self, item_dict, attr):
         """
-        Given a menu item dictionary, it returns true if attribute `name` is set.
+        Given a menu item dictionary, it returns true if an attr is set.
         """
-        yep = True
-        if not item_dict.get('name', False):
-            yep = False
-        return yep
+        if item_dict.get(attr, False):
+            return True
+        return False
 
-    def get_url(self, item_dict):
+    def _get_icon(self, parent_dict):
+        """
+        Given a menu item dictionary, this returns an icon class if one exist, or
+        returns an empty string.
+        """
+        return parent_dict.get('icon_class', '')
+
+    def _get_url(self, item_dict):
         """
         Given a menu item dictionary, it returns the URL or an empty string.
         """
-        final_url = ''
         url = item_dict.get('url', '')
         try:
             final_url = reverse(**url) if type(url) is dict else reverse(url)
@@ -68,73 +72,65 @@ class MenuBase(object):
             final_url = url
         return final_url
 
-    def has_url(self, item_dict):
-        """
-        Given a menu item dictionary, it returns true if attribute `url` is set.
-        """
-        if not self.get_url(item_dict):
-            return False
-        return True
-
-    def is_selected(self, item_dict):
+    def _is_selected(self, item_dict):
         """
         Given a menu item dictionary, it returns true if `url` is on path.
         """
-        url = self.get_url(item_dict)
-        if len(url) and url == self.path:
-            return True
-        return False
+        url = self._get_url(item_dict)
+        return url == self.path
 
-    def process_breadcrums(self, menu_list):
+    def _process_breadcrums(self, menu_list):
         """
         Given a menu list, it marks the items on the current path as selected, which
         can be used as breadcrumbs
         """
         for item in menu_list:
             if item['submenu']:
-                item['selected'] = self.process_breadcrums(item['submenu'])
+                item['selected'] = self._process_breadcrums(item['submenu'])
             if item['selected']:
                 return True
         return False
 
-    def get_submenu_list(self, parent_dict, depth):
+    def _get_submenu_list(self, parent_dict):
         """
         Given a menu item dictionary, it returns a submenu if one exist, or
         returns None.
         """
         submenu = parent_dict.get('submenu', None)
-        if submenu is not None:
+        if submenu:
             for child_dict in submenu:
-                child_dict['validators'] = list(set(list(parent_dict.get('validators', [])) +
-                    list(child_dict.get('validators', []))))
-            submenu = self.generate_menu(submenu, depth)
+                # This does a join between the menu item validators and submenu item validators and stores it on the
+                # submenu's validators
+                child_dict['validators'] = list(
+                    set(list(parent_dict.get('validators', [])) + list(child_dict.get('validators', [])))
+                )
+            submenu = self.generate_menu(submenu)
             if not submenu:
                 submenu = None
         return submenu
 
-    def get_menu_list(self, list_dict):
+    def _get_menu_list(self, list_dict):
         """
         A generator that returns only the visible menu items.
         """
         for item in list_dict:
-            if self.has_name(item) and self.has_url(item):
-                if self.is_validated(item):
+            if self._has_attr(item, 'name') and self._has_attr(item, 'url'):
+                if self._is_validated(item):
                     yield copy.copy(item)
 
-    def generate_menu(self, list_dict, depth=None):
+    def generate_menu(self, list_dict):
         """
         Given a list of dictionaries, returns a menu list.
         """
         visible_menu = []
-        current_depth = depth or 0
-        for item in self.get_menu_list(list_dict):
-            item['depth'] = current_depth
-            item['url'] = self.get_url(item)
-            item['selected'] = self.is_selected(item)
-            item['submenu'] = self.get_submenu_list(item, depth=current_depth + 1)
+        for item in self._get_menu_list(list_dict):
+            item['url'] = self._get_url(item)
+            item['selected'] = self._is_selected(item)
+            item['submenu'] = self._get_submenu_list(item)
+            item['icon_class'] = self._get_icon(item)
             visible_menu.append(item)
 
-        self.process_breadcrums(visible_menu)
+        self._process_breadcrums(visible_menu)
 
         return visible_menu
 

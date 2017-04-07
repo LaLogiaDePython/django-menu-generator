@@ -4,7 +4,7 @@ DATABASES = {
         'NAME': ':memory:',
     },
 }
-SECRET_KEY = "un33k"
+SECRET_KEY = "r4dy"
 INSTALLED_APPS = [
     'menu_generator',
     'menu_generator.tests.test_apps.app1',
@@ -22,7 +22,7 @@ NAV_MENU = [
     {
         "name": "Account",
         "url": "/account",
-        "validators": ["menu_generator.utils.is_authenticated", ],
+        "validators": ["menu_generator.validators.is_authenticated", ],
         "submenu": [
             {
                 "name": "Profile",
