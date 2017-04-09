@@ -15,7 +15,7 @@ A productivity tool that enables the generation of full featured menus through p
 - Support unlimited menus
 - Icons support
 - Semi-Automatically identifies the selected item and his breadcrums
-- Controls view access through validators (Permissions, Authentications or whatever you want)
+- Conditional menu items display through validators (Permissions, Authentications or whatever you want)
 
 ## Installation:
 
