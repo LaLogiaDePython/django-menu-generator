@@ -1,103 +1,111 @@
-Django Menu Generator
-====================
-
-**A menu generating application for Django**
+# Django Menu Generator
+> A menu generating application for Django
 
 [![status-image]][status-link]
 [![version-image]][version-link]
 [![coverage-image]][coverage-link]
 
-Overview
-====================
+A productivity tool that enables the generation of full featured menus through python list dictionaries, you only need to setup the HTML structure once for each menu you like to build and then use the dictionaries to generate menu items
 
-Generates **Simple Navigation** for Django projects/apps, while keeping it **DRY**.
+## Features:
 
-How to install
-====================
+- Tested support to Python 2.7, 3.4, 3.5, 3.6
+- Tested support to Django 1.8.18, 1.9.13, 1.10.7, 1.11
+- No database
+- Support unlimited menus
+- Icons support
+- Semi-Automatically identifies the selected item and his breadcrums
+- Controls view access through validators (Permissions, Authentications or whatever you want)
 
-    2. pip install django-menu-generator
-    3. git clone http://github.com/un33k/django-menu-generator
-        a. cd django-menu-generator
-        b. run python setup.py
-    4. wget https://github.com/un33k/django-menu-generator/zipball/master
-        a. unzip the downloaded file
-        b. cd into django-menu-generator-* directory
-        c. run python setup.py
+## Installation:
 
-How to use
-====================
-    1. Install `django-menu-generator` as per the above instructions.
-    2. Add `menu-generator` to your `INSTALLED_APPS`.
-    3. Add `{% load menu-generator %}` to templates that require it.
+You can install it with one of these options:
+- easy_install django-menu-generator
+- pip install django-menu-generator
+- git clone http://github.com/un33k/django-menu-generator
+    a. cd django-menu-generator
+    b. run python setup.py
+- wget https://github.com/un33k/django-menu-generator/zipball/master
+    a. unzip the downloaded file
+    b. cd into django-menu-generator-* directory
+    c. run python setup.py
 
-   ```python
-    ####################################################################################
-    Example: settings.py
-    ####################################################################################
+## Usage:
 
-    NAV_MENU_LEFT = [
-        {
-            "name": "Home",
-            "url": "/",
-        },
-        {
-            "name": "About",
-            "url": "/about",
-        },
-    ]
+1. Install 'django-menu-generator' as per the above instructions.
+2. Add 'menu_generator' to your INSTALLED_APPS.
+3. Add {% load menu_generator %} to templates that will handle the menus.
 
-    NAV_MENU_RIGHT = [
-        {
-            "name": "Login",
-            "url": "login_url_view",  # reversible
-            "validators": ["menu_generator.validators.is_anonymous"],
-        },
-        {
-            "name": "Register",
-            "url": "register_view_url",  # reversible
-            "validators": ["menu_generator.validators.is_anonymous"],
-        },
-        {
-            "name": "Account",
-            "url": "/acount",
-            "validators": ["menu_generator.validators.is_authenticated"],
-            "submenu": [
-                {
-                    "name": "Profile",
-                    "url": "/account/profile",
-                },
-                {
-                    "name": "Account Balance",
-                    "url": "/account/balance",
-                    "validators": ["myapp.profiles.is_paid_user"],
-                },
-                {
-                    "name": "Account Secrets",
-                    "url": "/account/secrets",
-                    "validators": ["menu_generator.validators.is_superuser"],
-                }
-            ],
-        },
-    ]
+```python
+####################################################################################
+Example: settings.py
+####################################################################################
 
-    FOOTER_MENU_LEFT = [
-        {
-            "name": "Facebook",
-            "url": "facebook.com/foobar",
-        },
-        {
-            "name": "Contact US",
-            "url": "/contact",
-        },
-    ]
+NAV_MENU_LEFT = [
+    {
+        "name": "Home",
+        "url": "/",
+    },
+    {
+        "name": "About",
+        "url": "/about",
+    },
+]
 
-    FOOTER_MENU_RIGHT = [
-        {
-            "name": "Address",
-            "url": "/address",
-        },
-    ]
-   ```
+NAV_MENU_RIGHT = [
+    {
+        "name": "Login",
+        "url": "login_url_view",  # reversible
+        "validators": ["menu_generator.validators.is_anonymous"],
+    },
+    {
+        "name": "Register",
+        "url": "register_view_url",  # reversible
+        "validators": ["menu_generator.validators.is_anonymous"],
+    },
+    {
+        "name": "Account",
+        "url": "/acount",
+        "validators": ["menu_generator.validators.is_authenticated"],
+        "submenu": [
+            {
+                "name": "Profile",
+                "url": "/account/profile",
+            },
+            {
+                "name": "Account Balance",
+                "url": "/account/balance",
+                "validators": ["myapp.profiles.is_paid_user"],
+            },
+            {
+                "name": "Account Secrets",
+                "url": "/account/secrets",
+                "validators": ["menu_generator.validators.is_superuser"],
+            }
+        ],
+    },
+]
+
+FOOTER_MENU_LEFT = [
+    {
+        "name": "Facebook",
+        "url": "facebook.com/foobar",
+    },
+    {
+        "name": "Contact US",
+        "url": "/contact",
+    },
+]
+
+FOOTER_MENU_RIGHT = [
+    {
+        "name": "Address",
+        "url": "/address",
+    },
+]
+```
+
+You can build the menu list dictionaries inside the project apps with ``menus.py`` files, see the docs for more.
 
 Then in your template, load the template tag to generate your menu.
 
@@ -107,20 +115,20 @@ Then in your template, load the template tag to generate your menu.
 
     <!DOCTYPE html>
     <html>
-        <head><title>Django Menuware</title></head>
+        <head><title>Django Menu Generator</title></head>
         <body>
             <!-- NAV BAR Start -->
             {% get_menu "NAV_MENU_LEFT" as left_menu %}
             <div style="float:left;">
                 {% for item in left_menu %}
                     <li class="{% if item.selected %} active {% endif %}">
-                        <a href="{{item.url}}">{{item.name}}</a>
+                    <a href="{{ item.url }}"> <i class="{{ item.icon_class }}"></i> {{ item.name }}</a>
                     </li>
                     {% if item.submenu %}
                         <ul>
                         {% for menu in item.submenu %}
                             <li class="{% if menu.selected %} active {% endif %}">
-                                <a href="{{menu.url}}">{{menu.name}}</a>
+                                <a href="{{ menu.url }}">{{ menu.name }}</a>
                             </li>
                         {% endfor %}
                         </ul>
@@ -132,13 +140,13 @@ Then in your template, load the template tag to generate your menu.
             <div style="float:right;">
                 {% for item in right_menu %}
                     <li class="{% if item.selected %} active {% endif %}">
-                        <a href="{{item.url}}">{{item.name}}</a>
+                        <a href="{{ item.url }}">{{ item.name }}</a>
                     </li>
                     {% if item.submenu %}
                         <ul>
                         {% for menu in item.submenu %}
                             <li class="{% if menu.selected %} active {% endif %}">
-                                <a href="{{menu.url}}">{{menu.name}}</a>
+                                <a href="{{ menu.url }}">{{ menu.name }}</a>
                             </li>
                         {% endfor %}
                         </ul>
@@ -162,27 +170,27 @@ Then in your template, load the template tag to generate your menu.
     </html>
    ```
 
-Running the tests
-====================
+## Running the tests:
 
 To run the tests against the current environment:
 
     python manage.py test
 
 
-License
-====================
+## License:
 
 Released under a ([MIT](LICENSE)) license.
 
+## Author and mantainers: 
 
-Version
-====================
-X.Y.Z Version
+[Milton Lenis](https://github.com/MiltonLn) - miltonln04@gmail.com
 
-    `MAJOR` version -- when you make incompatible API changes,
-    `MINOR` version -- when you add functionality in a backwards-compatible manner, and
-    `PATCH` version -- when you make backwards-compatible bug fixes.
+## Credits:
+
+I'd like to thank [Val Kneeman][valkneeman-link], the original author of this project under the name 'menuware'
+https://github.com/un33k/django-menuware
+
+
 
 [status-image]: https://travis-ci.org/RADYConsultores/django-menu-generator.svg?branch=master
 [status-link]: https://travis-ci.org/RADYConsultores/django-menu-generator?branch=master
@@ -195,4 +203,6 @@ X.Y.Z Version
 
 [download-image]: https://img.shields.io/pypi/dm/django-menu-generator.svg
 [download-link]: https://pypi.python.org/pypi/django-menu-generator
+
+[valkneeman-link]: https://github.com/un33k
 
