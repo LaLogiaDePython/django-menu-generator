@@ -5,7 +5,7 @@
 [![version-image]][version-link]
 [![coverage-image]][coverage-link]
 
-A productivity tool that enables the generation of full featured menus through python list dictionaries, you only need to setup the HTML structure once for each menu you like to build and then use the dictionaries to generate menu items
+A productivity tool that enables the generation of full featured menus through python dictionaries list, you only need to setup the HTML structure once for each menu you like to build and then use the dictionaries to generate menu items
 
 ## Features:
 
@@ -105,7 +105,7 @@ FOOTER_MENU_RIGHT = [
 ]
 ```
 
-You can build the menu list dictionaries inside the project apps with ``menus.py`` files, see the docs for more.
+You can build the menu dictionaries list inside the project apps with ``menus.py`` files, see the docs for more.
 
 Then in your template, load the template tag to generate your menu.
 
