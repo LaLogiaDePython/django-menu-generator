@@ -7,12 +7,13 @@ import sys
 
 name = 'django-menu-generator'
 package = 'menu_generator'
-description = "A menu generating application for Django."
+description = "A straightforward menu generator for Django"
 url = 'https://github.com/RADYConsultores/django-menu-generator'
 author = 'Milton Lenis'
 author_email = 'miltonln04@gmail.com'
+keywords = "django navigation menu generator"
 license = 'MIT'
-install_requires = ['']
+install_requires = ['django']
 classifiers = [
     'Development Status :: 5 - Production/Stable',
     'Environment :: Web Environment',
@@ -24,6 +25,13 @@ classifiers = [
     "Programming Language :: Python :: 2.7",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.4",
+    "Programming Language :: Python :: 3.5",
+    "Programming Language :: Python :: 3.6",
+    "Framework :: Django",
+    "Framework :: Django :: 1.8",
+    "Framework :: Django :: 1.9",
+    "Framework :: Django :: 1.10",
+    "Framework :: Django :: 1.11",
     'Topic :: Utilities'
 ]
 
@@ -80,5 +88,6 @@ setup(
     packages=get_packages(package),
     package_data=get_package_data(package),
     install_requires=install_requires,
-    classifiers=classifiers
+    classifiers=classifiers,
+    
 )
