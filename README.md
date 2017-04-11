@@ -23,12 +23,12 @@ You can install it with one of these options:
 - easy_install django-menu-generator
 - pip install django-menu-generator
 - git clone http://github.com/un33k/django-menu-generator
-    a. cd django-menu-generator
-    b. run python setup.py
+    1. cd django-menu-generator
+    2. run python setup.py
 - wget https://github.com/un33k/django-menu-generator/zipball/master
-    a. unzip the downloaded file
-    b. cd into django-menu-generator-* directory
-    c. run python setup.py
+    1. unzip the downloaded file
+    2. cd into django-menu-generator-* directory
+    3. run python setup.py
 
 ## Usage:
 
