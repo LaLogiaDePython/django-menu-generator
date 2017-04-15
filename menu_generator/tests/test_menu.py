@@ -1,9 +1,9 @@
+from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpRequest
 from django.test import TestCase
-from django.core.exceptions import ImproperlyConfigured
 
 from .utils import TestUser, is_main_site, is_paid_user
-from ..menu import MenuBase, generate_menu
+from ..menu import MenuBase
 from ..templatetags.menu_generator import get_menu
 
 
@@ -11,6 +11,7 @@ class MenuTestCase(TestCase):
     """
     Menu Test
     """
+
     def setUp(self):
         """
         Setup the test.
@@ -81,7 +82,7 @@ class MenuTestCase(TestCase):
 
     def test_menu_is_validated_for_dict_validators(self):
         menu_dict = {
-            "validators": ("menu_generator.tests.utils.is_main_site", ),
+            "validators": ("menu_generator.tests.utils.is_main_site",),
         }
         self.assertTrue(self.menu._is_validated(menu_dict))
 
@@ -185,7 +186,7 @@ class MenuTestCase(TestCase):
         self.request.user = TestUser(staff=True, authenticated=True, happy=True)
         self.menu.save_user_state(self.request)
         list_dict = [
-            {   # Menu item -- is_saff validator will be applied to the child node
+            {  # Menu item -- is_saff validator will be applied to the child node
                 "name": "parent1",
                 "url": "/user/account/",
                 "validators": ["menu_generator.validators.is_staff", ],
@@ -196,7 +197,7 @@ class MenuTestCase(TestCase):
                     },
                 ],
             },
-            {   # Menu item -- is_saff validator will be applied to the child node
+            {  # Menu item -- is_saff validator will be applied to the child node
                 "name": "parent2",
                 "url": "/user/settings/",
                 "validators": ["menu_generator.validators.is_authenticated", ],
