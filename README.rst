@@ -25,13 +25,20 @@ Features:
 Installation:
 -------------
 
-You can install it with one of these options: - easy\_install
-django-menu-generator - pip install django-menu-generator - git clone
-https://github.com/RADYConsultores/django-menu-generator 1. cd
-django-menu-generator 2. run python setup.py - wget
-https://github.com/RADYConsultores/django-menu-generator/zipball/master 1. unzip
-the downloaded file 2. cd into django-menu-generator-\* directory 3. run
-python setup.py
+You can install it with one of these options:
+
+- easy\_install django-menu-generator
+- pip install django-menu-generator
+- git clone https://github.com/RADYConsultores/django-menu-generator
+
+  1. cd django-menu-generator
+  2. run python setup.py
+
+- wget https://github.com/RADYConsultores/django-menu-generator/zipball/master
+
+  1. unzip the downloaded file
+  2. cd into django-menu-generator-\* directory
+  3. run python setup.py
 
 Usage:
 ------
@@ -115,7 +122,8 @@ You can build the menu dictionaries list inside the project apps with
 
 Then in your template, load the template tag to generate your menu.
 
-\`\`\`html {% load menu\_generator %}
+
+{% load menu\_generator %}
 
 ::
 
@@ -175,7 +183,7 @@ Then in your template, load the template tag to generate your menu.
         </body>
     </html>
 
-\`\`\`
+
 
 Running the tests:
 ------------------
