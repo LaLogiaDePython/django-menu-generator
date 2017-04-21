@@ -1,9 +1,9 @@
+from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpRequest
 from django.test import TestCase
-from django.core.exceptions import ImproperlyConfigured
 
 from .utils import TestUser, is_main_site, is_paid_user
-from ..menu import MenuBase, generate_menu
+from ..menu import MenuBase
 from ..templatetags.menu_generator import get_menu
 
 
@@ -11,6 +11,7 @@ class MenuTestCase(TestCase):
     """
     Menu Test
     """
+
     def setUp(self):
         """
         Setup the test.
@@ -81,7 +82,7 @@ class MenuTestCase(TestCase):
 
     def test_menu_is_validated_for_dict_validators(self):
         menu_dict = {
-            "validators": ("menu_generator.tests.utils.is_main_site", ),
+            "validators": ("menu_generator.tests.utils.is_main_site",),
         }
         self.assertTrue(self.menu._is_validated(menu_dict))
 
@@ -181,11 +182,19 @@ class MenuTestCase(TestCase):
         self.menu.save_user_state(self.request)
         self.assertTrue(self.menu._is_validated(menu_dict))
 
+    def test_menu_multiple_validators(self):
+        menu_dict = {
+            "validators": ["menu_generator.validators.is_authenticated", "menu_generator.validators.is_staff"],
+        }
+        self.request.user = TestUser(authenticated=True)
+        self.menu.save_user_state(self.request)
+        self.assertFalse(self.menu._is_validated(menu_dict))
+
     def test_generate_menu_submenu_attribute_inheritance(self):
         self.request.user = TestUser(staff=True, authenticated=True, happy=True)
         self.menu.save_user_state(self.request)
         list_dict = [
-            {   # Menu item -- is_saff validator will be applied to the child node
+            {  # Menu item -- is_saff validator will be applied to the child node
                 "name": "parent1",
                 "url": "/user/account/",
                 "validators": ["menu_generator.validators.is_staff", ],
@@ -196,7 +205,7 @@ class MenuTestCase(TestCase):
                     },
                 ],
             },
-            {   # Menu item -- is_saff validator will be applied to the child node
+            {  # Menu item -- is_saff validator will be applied to the child node
                 "name": "parent2",
                 "url": "/user/settings/",
                 "validators": ["menu_generator.validators.is_authenticated", ],
@@ -231,3 +240,24 @@ class MenuTestCase(TestCase):
         self.assertTrue('menu_generator.tests.utils.is_user_happy' in nav[1]['submenu'][0]['validators'])
 
         self.assertTrue(is_paid_user in nav[1]['submenu'][1]['validators'])
+
+    def test_generate_menu_no_visible_submenu(self):
+        self.request.user = TestUser(authenticated=True)
+        self.menu.save_user_state(self.request)
+        list_dict = [
+            {  # Menu item -- is_saff validator will be applied to the child node
+                "name": "parent1",
+                "url": "/user/account/",
+                "validators": ["menu_generator.validators.is_authenticated", ],
+                "submenu": [
+                    {
+                        "name": "child1",
+                        "url": '/user/account/profile/',
+                        "validators": ["menu_generator.validators.is_staff", ]  # submenu no visible
+                    },
+                ],
+            }
+        ]
+        nav = self.menu.generate_menu(list_dict)
+        self.assertEqual(len(nav), 1)
+        self.assertIsNone(nav[0]["submenu"])
