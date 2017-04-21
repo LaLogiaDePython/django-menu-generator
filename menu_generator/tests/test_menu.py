@@ -122,7 +122,7 @@ class MenuTestCase(TestCase):
         # Test case with correct parameters.
         menu_dict = {
             "validators": [
-                ("menu_generator.tests.utils.validator_with_parameters", "param1", "param2"),
+                ("menu_generator.tests.utils.validator_with_parameters", "param1", "param2",),
                 "menu_generator.tests.utils.is_main_site"
             ]
         }
@@ -163,7 +163,7 @@ class MenuTestCase(TestCase):
     def test_menu_is_validated_for_user_with_permission(self):
         menu_dict = {
             "validators": [
-                ("menu_generator.validators.user_has_permission", "test_permission")
+                ("menu_generator.validators.user_has_permission", "test_permission",)
             ]
         }
         self.request.user = TestUser(authenticated=True)
@@ -197,7 +197,7 @@ class MenuTestCase(TestCase):
             {  # Menu item -- is_saff validator will be applied to the child node
                 "name": "parent1",
                 "url": "/user/account/",
-                "validators": ["menu_generator.validators.is_staff", ],
+                "validators": ["menu_generator.validators.is_staff"],
                 "submenu": [
                     {
                         "name": "child1",
@@ -208,7 +208,7 @@ class MenuTestCase(TestCase):
             {  # Menu item -- is_saff validator will be applied to the child node
                 "name": "parent2",
                 "url": "/user/settings/",
-                "validators": ["menu_generator.validators.is_authenticated", ],
+                "validators": ["menu_generator.validators.is_authenticated"],
                 "submenu": [
                     {
                         "name": "child1",
@@ -248,12 +248,12 @@ class MenuTestCase(TestCase):
             {  # Menu item -- is_saff validator will be applied to the child node
                 "name": "parent1",
                 "url": "/user/account/",
-                "validators": ["menu_generator.validators.is_authenticated", ],
+                "validators": ["menu_generator.validators.is_authenticated"],
                 "submenu": [
                     {
                         "name": "child1",
                         "url": '/user/account/profile/',
-                        "validators": ["menu_generator.validators.is_staff", ]  # submenu no visible
+                        "validators": ["menu_generator.validators.is_staff"]  # submenu no visible
                     },
                 ],
             }
