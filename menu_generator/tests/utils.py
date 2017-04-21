@@ -34,6 +34,7 @@ class TestUser(object):
         self.is_superuser = authenticated and superuser
         self.is_happy = authenticated and happy
         self.is_paid = authenticated and paid
+        self.permissions = []
 
     @property
     def is_authenticated(self):
