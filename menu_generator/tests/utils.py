@@ -52,4 +52,7 @@ class TestUser(object):
         :param permission: Permission to be checked
         :return: Boolean indicating if a test user has a permission or not
         """
+        print(self.permissions, "####permisosososs")
+        print(permission)
+        print(permission in self.permissions)
         return permission in self.permissions
