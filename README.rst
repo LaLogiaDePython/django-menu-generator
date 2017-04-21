@@ -27,9 +27,9 @@ Installation:
 
 You can install it with one of these options: - easy\_install
 django-menu-generator - pip install django-menu-generator - git clone
-http://github.com/un33k/django-menu-generator 1. cd
+https://github.com/RADYConsultores/django-menu-generator 1. cd
 django-menu-generator 2. run python setup.py - wget
-https://github.com/un33k/django-menu-generator/zipball/master 1. unzip
+https://github.com/RADYConsultores/django-menu-generator/zipball/master 1. unzip
 the downloaded file 2. cd into django-menu-generator-\* directory 3. run
 python setup.py
 
@@ -195,6 +195,8 @@ Author and mantainers:
 ----------------------
 
 `Milton Lenis <https://github.com/MiltonLn>`__ - miltonln04@gmail.com
+
+`Juan Diego García <https://github.com/yamijuan>`__ - juandgoc@gmail.com
 
 Credits:
 --------
