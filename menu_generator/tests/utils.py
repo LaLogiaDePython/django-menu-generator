@@ -34,6 +34,7 @@ class TestUser(object):
         self.is_superuser = authenticated and superuser
         self.is_happy = authenticated and happy
         self.is_paid = authenticated and paid
+        self.permissions = []
 
     @property
     def is_authenticated(self):
@@ -52,7 +53,4 @@ class TestUser(object):
         :param permission: Permission to be checked
         :return: Boolean indicating if a test user has a permission or not
         """
-        print(self.permissions, "####permisosososs")
-        print(permission)
-        print(permission in self.permissions)
         return permission in self.permissions

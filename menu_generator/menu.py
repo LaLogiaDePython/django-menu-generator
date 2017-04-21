@@ -29,10 +29,7 @@ class MenuBase(object):
         if the user passes all the conditions, the user can see the menu
         """
         validators = item_dict.get('validators')
-        name = item_dict.get("name")
         if not validators:
-            if name == "testname":
-                print(validators)
             return True
 
         if not isinstance(validators, (list, tuple)):
@@ -47,11 +44,7 @@ class MenuBase(object):
                 # Using a python slice to get all items after the first to build function args
                 args = validator[1:]
                 # Pass the request as first arg by default
-                if name == "testname":
-                    print(func, args)
                 result_validations.append(func(self.request, *args))
-                if name == "testname":
-                    print(func, args, result_validations)
             else:
                 func = get_callable(validator)
                 result_validations.append(func(self.request))  # pragma: no cover

@@ -162,7 +162,6 @@ class MenuTestCase(TestCase):
 
     def test_menu_is_validated_for_user_with_permission(self):
         menu_dict = {
-            "name": "testname",
             "validators": [
                 ("menu_generator.validators.user_has_permission", "test_permission",)
             ]
