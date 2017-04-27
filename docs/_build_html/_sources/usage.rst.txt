@@ -1,51 +1,5 @@
-Django Menu Generator
-=====================
-
-    A menu generating application for Django
-
-|status-image| |version-image| |coverage-image|
-
-A productivity tool that enables the generation of full featured menus
-through python dictionaries list, you only need to setup the HTML
-structure once for each menu you like to build and then use the
-dictionaries to generate menu items
-
-Features:
----------
-
--  Tested support to Python 2.7, 3.4, 3.5, 3.6
--  Tested support to Django 1.8.18, 1.9.13, 1.10.7, 1.11
--  No database
--  Support unlimited menus
--  Icons support
--  Semi-Automatically identifies the selected item and his breadcrums
--  Conditional menu items display through validators (Permissions,
-   Authentications or whatever you want)
-
-Documentation:
---------------
-The full documentation for Django Menu Generator is allowed here: ADD URL
-
-Installation:
--------------
-
-You can install it with one of these options:
-
-- easy\_install django-menu-generator
-- pip install django-menu-generator
-- git clone https://github.com/RADYConsultores/django-menu-generator
-
-  1. cd django-menu-generator
-  2. run python setup.py
-
-- wget https://github.com/RADYConsultores/django-menu-generator/zipball/master
-
-  1. unzip the downloaded file
-  2. cd into django-menu-generator-\* directory
-  3. run python setup.py
-
-Usage:
-------
+Usage
+=====
 
 1. Once installed, add ``'menu_generator'`` to your INSTALLED\_APPS.
 2. Add ``{% load menu_generator %}`` to templates that will handle the
@@ -122,7 +76,7 @@ Usage:
     ]
 
 Or you can build the menu dictionaries list inside the project apps with
-``menus.py`` files, see docs for more.
+``menus.py`` files, see :doc:`menugeneration` for more.
 
 4. In your template, load the template tag to generate your menu.
 
@@ -186,44 +140,3 @@ Or you can build the menu dictionaries list inside the project apps with
     </html>
 
 5. Now you must to see your menus generated when you run your project
-
-Running the tests:
-------------------
-
-To run the tests against the current environment:
-
-::
-
-    python manage.py test
-
-License:
---------
-
-Released under a (`MIT <LICENSE>`__) license.
-
-Author and mantainers:
-----------------------
-
-`Milton Lenis <https://github.com/MiltonLn>`__ - miltonln04@gmail.com
-
-`Juan Diego García <https://github.com/yamijuan>`__ - juandgoc@gmail.com
-
-Mantained by:
-
-|rady-logo|
-
-Credits:
---------
-
-We would like to thank `Val Kneeman <https://github.com/un33k>`__, the
-original author of this project under the name 'menuware'
-https://github.com/un33k/django-menuware
-
-.. |status-image| image:: https://travis-ci.org/RADYConsultores/django-menu-generator.svg?branch=master
-   :target: https://travis-ci.org/RADYConsultores/django-menu-generator?branch=master
-.. |version-image| image:: https://img.shields.io/pypi/v/django-menu-generator.svg
-   :target: https://pypi.python.org/pypi/django-menu-generator
-.. |coverage-image| image:: https://coveralls.io/repos/github/RADYConsultores/django-menu-generator/badge.svg?branch=master
-   :target: https://coveralls.io/github/RADYConsultores/django-menu-generator?branch=master
-.. |rady-logo| image:: http://rady.com.co/static/logo_rady.png
-   :target: http://rady.com.co
