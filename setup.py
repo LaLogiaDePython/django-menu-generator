@@ -13,7 +13,7 @@ author = 'Milton Lenis'
 author_email = 'miltonln04@gmail.com'
 keywords = "django navigation menu generator"
 license = 'MIT'
-install_requires = ['django']
+install_requires = []
 classifiers = [
     'Development Status :: 5 - Production/Stable',
     'Environment :: Web Environment',

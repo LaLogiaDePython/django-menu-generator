@@ -7,6 +7,10 @@ __pycache__/
 pip-log.txt
 pip-delete-this-directory.txt
 
+# Distribution / Packaging
+.pypirc
+*.egg-info/
+
 # Unit test / coverage reports
 htmlcov/
 .tox/
@@ -27,3 +31,7 @@ docs/_build/
 
 # Pycharm files
 .idea/
+.DS_Store
+
+# Distribution
+dist/
