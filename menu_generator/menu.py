@@ -1,4 +1,5 @@
 import copy
+
 from django.core.exceptions import ImproperlyConfigured
 from django.urls import reverse, NoReverseMatch
 
@@ -9,6 +10,7 @@ class MenuBase(object):
     """
     Base class that generates menu list.
     """
+
     def __init__(self):
         self.path = ''
         self.request = None
@@ -33,6 +35,7 @@ class MenuBase(object):
         if not isinstance(validators, (list, tuple)):
             raise ImproperlyConfigured("validators must be a list")
 
+        result_validations = []
         for validator in validators:
             if isinstance(validator, tuple):
                 if len(validator) <= 1:
@@ -41,10 +44,11 @@ class MenuBase(object):
                 # Using a python slice to get all items after the first to build function args
                 args = validator[1:]
                 # Pass the request as first arg by default
-                return func(self.request, *args)
+                result_validations.append(func(self.request, *args))
             else:
                 func = get_callable(validator)
-                return func or func(self.request) # pragma: no cover
+                result_validations.append(func(self.request))  # pragma: no cover
+        return all(result_validations)
 
     def _has_attr(self, item_dict, attr):
         """
@@ -129,7 +133,6 @@ class MenuBase(object):
             item['submenu'] = self._get_submenu_list(item)
             item['icon_class'] = self._get_icon(item)
             visible_menu.append(item)
-
         self._process_breadcrums(visible_menu)
 
         return visible_menu
@@ -139,8 +142,10 @@ class Menu(MenuBase):
     """
     Class that generates menu list.
     """
+
     def __call__(self, request, list_dict):
         self.save_user_state(request)
         return self.generate_menu(list_dict)
+
 
 generate_menu = Menu()

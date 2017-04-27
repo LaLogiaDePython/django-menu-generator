@@ -1,16 +1,16 @@
 def is_user_happy(request):
-    return request.user.is_auth and request.user.is_happy # pragma: no cover
+    return request.user.is_auth and request.user.is_happy  # pragma: no cover
 
 
 def is_paid_user(request):
-    return request.user.is_auth and request.user.is_happy # pragma: no cover
+    return request.user.is_auth and request.user.is_happy  # pragma: no cover
 
 
 def is_main_site(request):
     """
     Non-User condition.
     """
-    return True # pragma: no covere
+    return True  # pragma: no covere
 
 
 def validator_with_parameters(request, param1, param2):
@@ -34,6 +34,7 @@ class TestUser(object):
         self.is_superuser = authenticated and superuser
         self.is_happy = authenticated and happy
         self.is_paid = authenticated and paid
+        self.permissions = []
 
     @property
     def is_authenticated(self):
