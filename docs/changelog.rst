@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+1.0.2(2017-04-29)
+-----------------
+
+- Updating .gitignore to ignore sphinx builds
+- Updating docs
+
 1.0.1(2017-04-29)
 -----------------
 
