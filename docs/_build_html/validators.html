@@ -45,6 +45,108 @@
             
   <div class="section" id="validators">
 <h1>Validators<a class="headerlink" href="#validators" title="Permalink to this headline">¶</a></h1>
+<p>Django Menu Generator uses validators to allow the displaying of menu items.</p>
+<p>A validator is a function that receives the request as arg and returns a boolean indicating if the check has passed</p>
+<p>for Django Menu Generator the validators must always be a list containing at least one callable or python path to a callable.
+If there is more than one validator, all of them will be evaluated using the AND connector.</p>
+<div class="section" id="built-in-validators">
+<h2>Built-in validators<a class="headerlink" href="#built-in-validators" title="Permalink to this headline">¶</a></h2>
+<p>Django Menu Generator has the following built-in validators:</p>
+<ul>
+<li><p class="first">is_superuser:</p>
+<blockquote>
+<div><p>A validator to check if the authenticated user is a superuser</p>
+<p>Usage:</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="s2">&quot;validators&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;menu_generator.validators.is_superuser&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">is_staff:</p>
+<blockquote>
+<div><p>A validator to check if the authenticated user is member of the staff</p>
+<p>Usage:</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="s2">&quot;validators&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;menu_generator.validators.is_staff&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">is_authenticated:</p>
+<blockquote>
+<div><p>A validator to check if user is authenticated</p>
+<p>Usage:</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="s2">&quot;validators&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;menu_generator.validators.is_authenticated&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">is_anonymous:</p>
+<blockquote>
+<div><p>A validator to check if the user is not authenticated</p>
+<p>Usage:</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="s2">&quot;validators&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;menu_generator.validators.is_anonymous&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">user_has_permission:</p>
+<blockquote>
+<div><p>A validator to check if the user has the given permission</p>
+<p>Usage:</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="s2">&quot;validators&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;menu_generator.validators.user_has_permission&#39;</span><span class="p">,</span> <span class="s1">&#39;app_label.permission_codename&#39;</span><span class="p">)</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">More than one validator:</p>
+<blockquote>
+<div><p>You can pass more than one validator to evaluate using the AND connector</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="s2">&quot;validators&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s1">&#39;menu_generator.validators.is_staff&#39;</span><span class="p">,</span>
+    <span class="p">(</span><span class="s1">&#39;menu_generator.validators.user_has_permission&#39;</span><span class="p">,</span> <span class="s1">&#39;some_app.some_permission&#39;</span><span class="p">)</span>
+    <span class="o">...</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="custom-validators">
+<h2>Custom validators<a class="headerlink" href="#custom-validators" title="Permalink to this headline">¶</a></h2>
+<p>You can build your own validators and use them with Django Menu Generator</p>
+<p>Let&#8217;s build a validator that checks if the user have more than one pet (dummy example) assuming the user has a
+many to many relation called pets</p>
+<p>Assuming we build the function inside <code class="docutils literal"><span class="pre">your_project/app1</span></code> on a <code class="docutils literal"><span class="pre">menu_validators.py</span></code> we have:</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Remember you always must to past the request as first parameter</span>
+<span class="k">def</span> <span class="nf">has_more_than_one_pet</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+
+    <span class="k">return</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">pets</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>So we can use it as a validator</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="s2">&quot;validators&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;your_project.app1.menu_validators.has_more_than_one_pet&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Now let&#8217;s build a validator that checks if the user&#8217;s pet belongs to a specific type to illustrate the validators with
+parameters.</p>
+<p>Assuming we build the function inside the same path and the user have a foreign key called pet</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">has_a_pet_of_type</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
+
+    <span class="k">return</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">pet</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="nb">type</span>
+</pre></div>
+</div>
+<p>So we use the validator like this:</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="s2">&quot;validators&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;your_project.app1.menu_validators.has_a_pet_of_type&#39;</span><span class="p">,</span> <span class="s1">&#39;DOG&#39;</span><span class="p">)</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>As you can see, we use tuples to pass parameters to the validators, where the first position is the validator and the rest are
+the function parameters</p>
+</div>
 </div>
 
 
@@ -52,7 +154,16 @@
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Validators</a><ul>
+<li><a class="reference internal" href="#built-in-validators">Built-in validators</a></li>
+<li><a class="reference internal" href="#custom-validators">Custom validators</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>

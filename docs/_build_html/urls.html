@@ -45,6 +45,33 @@
             
   <div class="section" id="urls">
 <h1>URLs<a class="headerlink" href="#urls" title="Permalink to this headline">¶</a></h1>
+<p>You can pass the URL parameters to menu items in three ways.</p>
+<div class="section" id="raw-urls">
+<h2>Raw URLs<a class="headerlink" href="#raw-urls" title="Permalink to this headline">¶</a></h2>
+<p>A hard-coded url:</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s1">&#39;/some-path/to-feature&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reversible-urls">
+<h2>Reversible URLs<a class="headerlink" href="#reversible-urls" title="Permalink to this headline">¶</a></h2>
+<p>An url that can be reversed with the <cite>reverse</cite> method:</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s1">&#39;named_url&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="url-with-args-or-kwargs">
+<h2>URL with args or kwargs<a class="headerlink" href="#url-with-args-or-kwargs" title="Permalink to this headline">¶</a></h2>
+<p>e.g. If you have an url with kwargs like this:</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^update/(?P&lt;pk&gt;\d+)/$&#39;</span><span class="p">,</span> <span class="n">SomeView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;update&#39;</span><span class="p">),</span>
+</pre></div>
+</div>
+<p>you can pass the url as follows:</p>
+<blockquote>
+<div>&#8220;url&#8221;: {&#8220;viewname&#8221;: &#8216;update&#8217;, &#8220;kwargs&#8221;: {&#8220;pk&#8221;: 1}}</div></blockquote>
+<p>In fact, you can pass any of the parameters of the reverse method through the dictionary</p>
+<p>For Django 1.10 the reverse method sign is: <code class="docutils literal"><span class="pre">reverse(viewname,</span> <span class="pre">urlconf=None,</span> <span class="pre">args=None,</span> <span class="pre">kwargs=None,</span> <span class="pre">current_app=None)</span></code></p>
+</div>
 </div>
 
 
@@ -52,7 +79,17 @@
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">URLs</a><ul>
+<li><a class="reference internal" href="#raw-urls">Raw URLs</a></li>
+<li><a class="reference internal" href="#reversible-urls">Reversible URLs</a></li>
+<li><a class="reference internal" href="#url-with-args-or-kwargs">URL with args or kwargs</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>

@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="urls.html" />
+    <link rel="next" title="URLs" href="urls.html" />
     <link rel="prev" title="Usage" href="usage.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -45,6 +45,77 @@
             
   <div class="section" id="menu-generation">
 <h1>Menu Generation<a class="headerlink" href="#menu-generation" title="Permalink to this headline">¶</a></h1>
+<p>Django Menu Generator uses python dictionaries to represent the menu items, usually a menu item is as follows:</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s1">&#39;some name&#39;</span><span class="p">,</span>
+    <span class="s2">&quot;icon_class&quot;</span><span class="p">:</span> <span class="s1">&#39;some icon class&#39;</span><span class="p">,</span>
+    <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="n">URL</span> <span class="n">spec</span><span class="p">,</span>
+    <span class="s2">&quot;validators&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">validators</span> <span class="p">],</span>
+    <span class="s2">&quot;submenu&quot;</span><span class="p">:</span> <span class="n">Dictionary</span> <span class="n">like</span> <span class="n">this</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Where each key is as follows:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">name</span></code>: A string representing the label of the menu item. If you are using i18n here you can pass the name with the <code class="docutils literal"><span class="pre">ugettext_lazy</span></code> function</li>
+<li><code class="docutils literal"><span class="pre">icon_class</span></code>: A string representing the class of the icon you wish to show on the menu item, e.g you can use font-awesome</li>
+<li><code class="docutils literal"><span class="pre">url</span></code>: See <a class="reference internal" href="urls.html"><span class="doc">URLs</span></a></li>
+<li><code class="docutils literal"><span class="pre">validators</span></code>: See <a class="reference internal" href="validators.html"><span class="doc">Validators</span></a></li>
+<li><code class="docutils literal"><span class="pre">submenu</span></code>: You can create infinite nested submenus passing here menu items like this</li>
+</ul>
+<p>Django Menu Generator offers two ways to generate the menus, through the Django settings and through each of the Django
+apps</p>
+<div class="section" id="generating-menus-through-settings">
+<h2>Generating menus through settings<a class="headerlink" href="#generating-menus-through-settings" title="Permalink to this headline">¶</a></h2>
+<p>You can add various list dictionaries representing each menu you have as explained in <a class="reference internal" href="usage.html"><span class="doc">Usage</span></a>
+We recommend to have a <code class="docutils literal"><span class="pre">menus.py</span></code> file with the menu list dictionaries and then import it to the settings file if you
+go this way</p>
+</div>
+<div class="section" id="generating-menus-through-apps">
+<h2>Generating menus through apps<a class="headerlink" href="#generating-menus-through-apps" title="Permalink to this headline">¶</a></h2>
+<p>Some people prefer to isolate all the aspects of a project between apps, so, we add this feature to allow the menus
+live inside each app.</p>
+<p>You need to add inside the app a <code class="docutils literal"><span class="pre">menus.py</span></code> file that contains a dictionary called <code class="docutils literal"><span class="pre">MENUS</span></code>, each element of the
+dictionary will be a menu list dictionary with all the configuration needed to display that menu, e.g:</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">MENUS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;NAV_MENU_LEFT&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;App1 Feature&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;/app1-feature&quot;</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;NAV_MENU_TOP&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Second Menu Feature&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;named_url&quot;</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>So, as an example, for the <code class="docutils literal"><span class="pre">'NAV_MENU_LEFT'</span></code>, Django Menu Generator will loop each app searching for the <code class="docutils literal"><span class="pre">'NAV_MENU_LEFT'</span></code>
+list dictionaries inside of the <code class="docutils literal"><span class="pre">MENUS</span></code> and build all the menu configuration to build the whole menu.</p>
+<p>With this feature you can have a project structure like this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>your_project/
+├── config_folder/
+│   └── ...
+├── app1
+│   └── models.py
+│       forms.py
+│       views.py
+│       menus.py
+│
+├── app2
+│   └── models.py
+│       forms.py
+│       views.py
+│       menus.py
+│
+ ...
+</pre></div>
+</div>
+<p>You can have a mix of the two approaches if you wish</p>
+</div>
 </div>
 
 
@@ -52,12 +123,21 @@
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Menu Generation</a><ul>
+<li><a class="reference internal" href="#generating-menus-through-settings">Generating menus through settings</a></li>
+<li><a class="reference internal" href="#generating-menus-through-apps">Generating menus through apps</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="usage.html" title="previous chapter">Usage</a></li>
-      <li>Next: <a href="urls.html" title="next chapter">&lt;no title&gt;</a></li>
+      <li>Next: <a href="urls.html" title="next chapter">URLs</a></li>
   </ul></li>
 </ul>
 </div>
