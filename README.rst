@@ -24,7 +24,9 @@ Features:
 
 Documentation:
 --------------
-The full documentation for Django Menu Generator is allowed here: ADD URL
+The full documentation for Django Menu Generator is allowed here:
+
+http://django-menu-generator.readthedocs.io/en/latest/index.html
 
 Installation:
 -------------

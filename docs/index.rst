@@ -35,6 +35,7 @@ Contents:
    validators
    changelog
    tests
+   authors
    contribute
    support
    license
