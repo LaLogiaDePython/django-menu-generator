@@ -32,6 +32,8 @@ e.g. If you have an url with kwargs like this:
 
 you can pass the url as follows:
 
+.. code:: python
+
     "url": {"viewname": 'update', "kwargs": {"pk": 1}}
 
 In fact, you can pass any of the parameters of the reverse method through the dictionary
