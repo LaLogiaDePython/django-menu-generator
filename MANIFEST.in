@@ -1,4 +1,4 @@
 include LICENSE
 include AUTHORS.md
-include README.md
+include README.rst
 recursive-include docs *
