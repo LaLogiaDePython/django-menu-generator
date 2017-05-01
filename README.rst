@@ -192,11 +192,11 @@ Or you can build the menu dictionaries list inside the project apps with
 Running the tests:
 ------------------
 
-To run the tests against the current environment:
+To run the tests against configured environments:
 
 ::
 
-    python manage.py test
+    tox
 
 License:
 --------
