@@ -4,7 +4,7 @@ import django
 from django.core.exceptions import ImproperlyConfigured
 from .utils import get_callable
 
-if django.get_version() >= '1.10':
+if django.VERSION >= (1, 10):
     from django.urls import reverse, NoReverseMatch
 else:
     from django.core.urlresolvers import reverse, NoReverseMatch
