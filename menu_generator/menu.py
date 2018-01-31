@@ -82,10 +82,20 @@ class MenuBase(object):
 
     def _is_selected(self, item_dict):
         """
-        Given a menu item dictionary, it returns true if `url` is on path.
+        Given a menu item dictionary, it returns true if `url` is on path,
+        unless the item is marked as a root, in which case returns true if `url` is part of path.
         """
         url = self._get_url(item_dict)
-        return url == self.path
+        if self._is_root(item_dict):
+            return url in self.path
+        else:
+            return url == self.path
+
+    def _is_root(self, item_dict):
+        """
+        Given a menu item dictionary, it returns true if item is marked as a `root`.
+        """
+        return item_dict.get('root', False)
 
     def _process_breadcrums(self, menu_list):
         """
