@@ -1,3 +1,41 @@
+##1.0.3
+
+Project Enhancements:
+
+  - Dropping support for Python 2
+  - Updating docs
+  - Readme updating
+  - Support for Django 2.0 (Thanks to @lachmanfrantisek)
+  
+Features:
+  
+  - Adding support to root paths (Thanks to @lucaskuzma)
+  
+BugFix:
+  
+  - Fixing backward compatibility with Django < 1.10
+
+##1.0.2
+
+Project Enhancements:
+
+  - Updating .gitignore to ignore sphinx builds
+  - Updating docs
+  - Readme enhancements
+
+##1.0.1
+
+Project Enhancements:
+
+  - Added flake8 to CI
+  - Added tox
+  - Added docs
+  - Readme enhanced
+
+BugFix:
+  
+  - Added a correction to the validators evaluation with the AND connector
+
 ## 1.0.0
 
 Feature:
@@ -6,7 +44,7 @@ Feature:
   - Dropped support for Python < 3.4
   - Changed licensing from BSD to MIT
   - Added `validators` feature
-    - Not backward compatible with versions < 1.0.0
+  - Not backward compatible with versions < 1.0.0
 
 ## 0.1.10
 

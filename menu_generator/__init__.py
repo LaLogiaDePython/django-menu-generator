@@ -1,5 +1,5 @@
-__author__ = 'Milton Lenis @ Rady Consultores'
+__author__ = 'Milton Lenis'
 __description__ = 'A straightforward menu generator for Django'
-__version__ = '1.0.2'
+__version__ = '1.0.3'
 
 default_app_config = 'menu_generator.apps.MenuAppConfig'

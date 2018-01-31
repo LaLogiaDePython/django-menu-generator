@@ -35,12 +35,12 @@ You can install it with one of these options:
 
 - ``easy_install django-menu-generator``
 - ``pip install django-menu-generator``
-- ``git clone https://github.com/RADYConsultores/django-menu-generator``
+- ``git clone https://github.com/LaLogiaDePython/django-menu-generator``
 
   1. ``cd django-menu-generator``
   2. run python setup.py
 
-- ``wget https://github.com/RADYConsultores/django-menu-generator/zipball/master``
+- ``wget https://github.com/LaLogiaDePython/django-menu-generator/zipball/master``
 
   1. unzip the downloaded file
   2. cd into django-menu-generator-\* directory
@@ -210,10 +210,6 @@ Author and mantainers:
 
 `Juan Diego García <https://github.com/yamijuan>`__ - juandgoc@gmail.com
 
-Mantained by:
-
-|rady-logo|
-
 Credits:
 --------
 
@@ -221,11 +217,9 @@ We would like to thank `Val Kneeman <https://github.com/un33k>`__, the
 original author of this project under the name 'menuware'
 https://github.com/un33k/django-menuware
 
-.. |status-image| image:: https://travis-ci.org/RADYConsultores/django-menu-generator.svg?branch=master
-   :target: https://travis-ci.org/RADYConsultores/django-menu-generator?branch=master
+.. |status-image| image:: https://travis-ci.org/LaLogiaDePython/django-menu-generator.svg?branch=master
+   :target: https://travis-ci.org/LaLogiaDePython/django-menu-generator?branch=master
 .. |version-image| image:: https://img.shields.io/pypi/v/django-menu-generator.svg
    :target: https://pypi.python.org/pypi/django-menu-generator
-.. |coverage-image| image:: https://coveralls.io/repos/github/RADYConsultores/django-menu-generator/badge.svg?branch=master
-   :target: https://coveralls.io/github/RADYConsultores/django-menu-generator?branch=master
-.. |rady-logo| image:: http://rady.com.co/static/logo_rady.png
-   :target: http://rady.com.co
+.. |coverage-image| image:: https://coveralls.io/repos/github/LaLogiaDePython/django-menu-generator/badge.svg?branch=master
+   :target: https://coveralls.io/github/LaLogiaDePython/django-menu-generator?branch=master

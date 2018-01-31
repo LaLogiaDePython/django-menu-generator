@@ -8,7 +8,7 @@ import sys
 name = 'django-menu-generator'
 package = 'menu_generator'
 description = "A straightforward menu generator for Django"
-url = 'https://github.com/RADYConsultores/django-menu-generator'
+url = 'https://github.com/LaLogiaDePython/django-menu-generator'
 author = 'Milton Lenis'
 author_email = 'miltonln04@gmail.com'
 keywords = "django navigation menu generator"
@@ -21,8 +21,6 @@ classifiers = [
     'License :: OSI Approved :: MIT License',
     'Operating System :: OS Independent',
     'Programming Language :: Python',
-    "Programming Language :: Python :: 2",
-    "Programming Language :: Python :: 2.7",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.4",
     "Programming Language :: Python :: 3.5",
