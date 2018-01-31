@@ -1,9 +1,13 @@
 import copy
 
+import django
 from django.core.exceptions import ImproperlyConfigured
-from django.urls import reverse, NoReverseMatch
-
 from .utils import get_callable
+
+if django.get_version() >= '1.10':
+    from django.urls import reverse, NoReverseMatch
+else:
+    from django.core.urlresolvers import reverse, NoReverseMatch
 
 
 class MenuBase(object):

@@ -38,3 +38,6 @@ docs/_build_html
 # Distribution
 dist/
 build/
+
+# Virtualenv
+venv/
