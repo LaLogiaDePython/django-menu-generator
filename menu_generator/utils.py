@@ -27,7 +27,7 @@ def clean_app_config(app_path):
         return app_path
     else:
         app_split = app_path.split('.')
-        new_app = '.'.join(app_split[:len(app_split) - 2])
+        new_app = '.'.join(app_split[:-2])
         if new_app in apps_names:
             return new_app
         else:
