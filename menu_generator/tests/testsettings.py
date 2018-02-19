@@ -7,7 +7,7 @@ DATABASES = {
 SECRET_KEY = "r4dy"
 INSTALLED_APPS = [
     'menu_generator',
-    'menu_generator.tests.test_apps.app1',
+    'menu_generator.tests.test_apps.app1.apps.MyAppConfig',
     'menu_generator.tests.test_apps.app2',
     'menu_generator.tests.test_apps.app3'
 ]
