@@ -1,3 +1,9 @@
+##1.0.4
+
+Features:
+
+  - Adding support for AppConfig in INSTALLED_APPS
+
 ##1.0.3
 
 Project Enhancements:
