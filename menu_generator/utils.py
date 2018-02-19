@@ -30,7 +30,7 @@ def clean_app_config(app_path):
         new_app = '.'.join(app_split[:-2])
         if new_app in apps_names:
             return new_app
-        else:  # noqa
+        else:  # pragma: no cover
             raise ImproperlyConfigured(
                 "The application {0} is not in the configured apps or does" +
                 "not have the pattern app.apps.AppConfig".format(app_path)
