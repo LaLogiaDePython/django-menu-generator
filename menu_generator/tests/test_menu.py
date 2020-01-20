@@ -190,6 +190,14 @@ class MenuTestCase(TestCase):
         self.menu.save_user_state(self.request)
         self.assertFalse(self.menu._is_validated(menu_dict))
 
+    def test_menu_multiple_validators_skip_on_false(self):
+        menu_dict = {
+            "validators": ["menu_generator.validators.is_staff", "this-is-never-evaluated"],
+        }
+        self.request.user = TestUser(authenticated=True)
+        self.menu.save_user_state(self.request)
+        self.assertFalse(self.menu._is_validated(menu_dict))
+
     def test_generate_menu_submenu_attribute_inheritance(self):
         self.request.user = TestUser(staff=True, authenticated=True, happy=True)
         self.menu.save_user_state(self.request)

@@ -38,21 +38,19 @@ class MenuBase(object):
 
         if not isinstance(validators, (list, tuple)):
             raise ImproperlyConfigured("validators must be a list")
-
-        result_validations = []
+        
         for validator in validators:
             if isinstance(validator, tuple):
-                if len(validator) <= 1:
+                func_or_path, *args = validator
+                if not args:
                     raise ImproperlyConfigured("You are passing a tuple validator without args %s" % str(validator))
-                func = get_callable(validator[0])
-                # Using a python slice to get all items after the first to build function args
-                args = validator[1:]
-                # Pass the request as first arg by default
-                result_validations.append(func(self.request, *args))
             else:
-                func = get_callable(validator)
-                result_validations.append(func(self.request))  # pragma: no cover
-        return all(result_validations)
+                func_or_path, args = validator, []
+            
+            func = get_callable(func_or_path)
+            if not func(self.request, *args):
+                return False
+        return True
 
     def _has_attr(self, item_dict, attr):
         """
