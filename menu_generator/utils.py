@@ -32,6 +32,6 @@ def clean_app_config(app_path):
             return new_app
         else:  # pragma: no cover
             raise ImproperlyConfigured(
-                "The application {0} is not in the configured apps or does" +
-                "not have the pattern app.apps.AppConfig".format(app_path)
+                "The application {0} is not in the configured apps or does".format(app_path) +
+                "not have the pattern app.apps.AppConfig"
             )
