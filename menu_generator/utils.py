@@ -1,8 +1,13 @@
 from importlib import import_module
 
+import django
 from django.apps import apps
 from django.core.exceptions import ImproperlyConfigured
 
+if django.VERSION >= (1, 10):  # pragma: no cover
+    from django.urls import reverse, NoReverseMatch
+else:
+    from django.core.urlresolvers import reverse, NoReverseMatch
 
 def get_callable(func_or_path):
     """
@@ -35,3 +40,14 @@ def clean_app_config(app_path):
                 "The application {0} is not in the configured apps or does" +
                 "not have the pattern app.apps.AppConfig".format(app_path)
             )
+
+
+def parse_url(url):
+    """
+    Returns concrete URL for a menu dict URL attribute.
+    """
+    try:
+        final_url = reverse(**url) if type(url) is dict else reverse(url)
+    except NoReverseMatch:
+        final_url = url
+    return final_url

@@ -261,3 +261,48 @@ class MenuTestCase(TestCase):
         nav = self.menu.generate_menu(list_dict)
         self.assertEqual(len(nav), 1)
         self.assertIsNone(nav[0]["submenu"])
+
+    def test_generate_menu_selected_related_urls_simple(self):
+        self.request.user = TestUser(authenticated=True)
+        self.request.path = "/persons/1/"
+        self.menu.save_user_state(self.request)
+        list_dict = [
+            {  
+                "name": "parent1",
+                "url": "/user/account/",
+                "related_urls": ["/persons/", "/groups/"],
+            }
+        ]
+        nav = self.menu.generate_menu(list_dict)
+
+        self.assertEqual(len(nav), 1)
+        self.assertEqual(nav[0]["selected"], True)
+
+    def test_generate_menu_selected_related_urls_submenu(self):
+        self.request.user = TestUser(authenticated=True)
+        self.request.path = "/persons/1/"
+        self.menu.save_user_state(self.request)
+        list_dict = [
+            {  
+                "name": "parent1",
+                "url": "/user/account/",
+                "submenu": [
+                    {
+                        "name": "child1",
+                        "url": '/user/account/profile/',
+                        "related_urls": ["/persons/"]
+                    },
+                    {
+                        "name": "child2",
+                        "url": 'named_url',
+                        "related_urls": ["/groups/"]
+                    },
+                ],
+            }
+        ]
+        nav = self.menu.generate_menu(list_dict)
+
+        self.assertEqual(len(nav), 1)
+        self.assertEqual(nav[0]["selected"], True)
+        self.assertEqual(nav[0]["submenu"][0]["selected"], True)
+        self.assertEqual(nav[0]["submenu"][1]["selected"], False)
