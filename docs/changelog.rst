@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+1.1.0(2020-11-15)
+-----------------
+
+- Features:
+    - Adding support for newer versions of Python and Django
+    - Adding support for related paths (Thanks to @hansegucker)
+
 1.0.4(2018-02-19)
 -----------------
 
