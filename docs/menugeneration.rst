@@ -11,6 +11,7 @@ Django Menu Generator uses python dictionaries to represent the menu items, usua
         "url": URL spec,
         "root": True | False,
         "related_urls": [ list of related URLs ],
+        "related_views": [ list of related views ],
         "validators": [ list of validators ],
         "submenu": Dictionary like this
     }
@@ -24,6 +25,8 @@ Where each key is as follows:
 - ``url``: See :doc:`urls`
 
 - ``related_urls``: If one of this URLs is part of the path on the currently opened page, the menu item will be marked as selected (format of URLs like described at :doc:`urls`)
+
+  - ``related_views``: If the currently opened page resolves to one of these views, the menu item will be marked as selected.
 
 - ``root``: A flag to indicate this item is the root of a path, with this you can correctly mark nested menus as selected.
 
