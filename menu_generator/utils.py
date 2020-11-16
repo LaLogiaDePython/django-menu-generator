@@ -9,6 +9,7 @@ if django.VERSION >= (1, 10):  # pragma: no cover
 else:
     from django.core.urlresolvers import reverse, NoReverseMatch
 
+
 def get_callable(func_or_path):
     """
     Receives a dotted path or a callable, Returns a callable or None

@@ -267,7 +267,7 @@ class MenuTestCase(TestCase):
         self.request.path = "/persons/1/"
         self.menu.save_user_state(self.request)
         list_dict = [
-            {  
+            {
                 "name": "parent1",
                 "url": "/user/account/",
                 "related_urls": ["/persons/", "/groups/"],
@@ -283,7 +283,7 @@ class MenuTestCase(TestCase):
         self.request.path = "/persons/1/"
         self.menu.save_user_state(self.request)
         list_dict = [
-            {  
+            {
                 "name": "parent1",
                 "url": "/user/account/",
                 "submenu": [
