@@ -10,6 +10,7 @@ Django Menu Generator uses python dictionaries to represent the menu items, usua
         "icon_class": 'some icon class',
         "url": URL spec,
         "root": True | False,
+        "related_urls": [ list of related URLs ],
         "validators": [ list of validators ],
         "submenu": Dictionary like this
     }
@@ -21,6 +22,8 @@ Where each key is as follows:
 - ``icon_class``: A string representing the class of the icon you wish to show on the menu item, e.g you can use font-awesome
 
 - ``url``: See :doc:`urls`
+
+- ``related_urls``: If one of this URLs is part of the path on the currently opened page, the menu item will be marked as selected (format of URLs like described at :doc:`urls`)
 
 - ``root``: A flag to indicate this item is the root of a path, with this you can correctly mark nested menus as selected.
 
