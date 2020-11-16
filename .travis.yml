@@ -20,7 +20,6 @@ env:
 
 install:
   - pip install $DJANGO
-  - pip install flake8
   - pip install coveralls
 
 script: coverage run --source=menu_generator manage.py test
