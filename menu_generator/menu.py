@@ -2,7 +2,7 @@ import copy
 
 import django
 from django.core.exceptions import ImproperlyConfigured
-from .utils import get_callable
+from .utils import get_callable, parse_url
 
 if django.VERSION >= (1, 10):  # pragma: no cover
     from django.urls import reverse, NoReverseMatch
@@ -74,22 +74,33 @@ class MenuBase(object):
         Given a menu item dictionary, it returns the URL or an empty string.
         """
         url = item_dict.get('url', '')
-        try:
-            final_url = reverse(**url) if type(url) is dict else reverse(url)
-        except NoReverseMatch:
-            final_url = url
-        return final_url
+        return parse_url(url)
+
+    def _get_related_urls(self, item_dict):
+        """
+        Given a menu item dictionary, it returns the relateds URLs or an empty list.
+        """
+        related_urls = item_dict.get('related_urls', [])
+        return [parse_url(url) for url in related_urls]
 
     def _is_selected(self, item_dict):
         """
         Given a menu item dictionary, it returns true if `url` is on path,
         unless the item is marked as a root, in which case returns true if `url` is part of path.
+
+        If related URLS are given, it also returns true if one of the related URLS is part of path.
         """
         url = self._get_url(item_dict)
-        if self._is_root(item_dict):
-            return url in self.path
+        if self._is_root(item_dict) and url in self.path:
+            return True
+        elif url == self.path:
+            return True
         else:
-            return url == self.path
+            # Go through all related URLs and test 
+            for related_url in self._get_related_urls(item_dict):
+                if related_url in self.path:
+                    return True
+        return False
 
     def _is_root(self, item_dict):
         """
