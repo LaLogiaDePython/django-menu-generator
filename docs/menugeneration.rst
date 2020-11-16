@@ -23,7 +23,7 @@ Where each key is as follows:
 
 - ``url``: See :doc:`urls`
 
-- ``related_urls``: If one of this URLs is part of the path on the currently opened page, the menu item will be marked as selected (format of URLs like described at :doc:`urls`)
+- ``related_urls``: If one of these URLs is part of the path on the currently opened page, the menu item will be marked as selected (format of URLs like described at :doc:`urls`)
 
 - ``root``: A flag to indicate this item is the root of a path, with this you can correctly mark nested menus as selected.
 
