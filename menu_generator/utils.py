@@ -52,3 +52,13 @@ def parse_url(url):
     except NoReverseMatch:
         final_url = url
     return final_url
+
+
+def path_startswith(path, prefix):
+    """
+    Returns True if the leftmost path components are the same as prefix.
+    """
+    path_components = path.strip("/").split("/")
+    prefix_components = prefix.strip("/").split("/")
+
+    return path_components[:len(prefix_components)] == prefix_components

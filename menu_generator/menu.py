@@ -2,7 +2,7 @@ import copy
 
 import django
 from django.core.exceptions import ImproperlyConfigured
-from .utils import get_callable, parse_url
+from .utils import get_callable, parse_url, path_startswith
 
 if django.VERSION >= (1, 10):  # pragma: no cover
     from django.urls import reverse, NoReverseMatch
@@ -91,14 +91,14 @@ class MenuBase(object):
         If related URLS are given, it also returns true if one of the related URLS is part of path.
         """
         url = self._get_url(item_dict)
-        if self._is_root(item_dict) and url in self.path:
+        if self._is_root(item_dict) and path_startswith(self.path, url):
             return True
         elif url == self.path:
             return True
         else:
             # Go through all related URLs and test 
             for related_url in self._get_related_urls(item_dict):
-                if related_url in self.path:
+                if path_startswith(self.path, related_url):
                     return True
         return False
 
