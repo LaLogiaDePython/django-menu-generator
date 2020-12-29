@@ -306,3 +306,13 @@ class MenuTestCase(TestCase):
         self.assertEqual(nav[0]["selected"], True)
         self.assertEqual(nav[0]["submenu"][0]["selected"], True)
         self.assertEqual(nav[0]["submenu"][1]["selected"], False)
+
+    def test_subsequent_requests(self):
+        self.request.user = TestUser(authenticated=True)
+        ctx = {
+            'request': self.request
+        }
+        nav1 = get_menu(ctx, 'NAV_MENU')
+        nav2 = get_menu(ctx, 'NAV_MENU')
+        # Both menus should be equal
+        self.assertEqual(nav1, nav2)
