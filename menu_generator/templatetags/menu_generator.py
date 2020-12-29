@@ -20,7 +20,9 @@ def get_menu(context, menu_name):
     :param menu_name: String, name of the menu to be found
     :return: Generated menu
     """
-    menu_list = getattr(settings, menu_name, defaults.MENU_NOT_FOUND)
+    # Instantiate a new list() or else the same instance of the menu_list gets used over and over
+    # (and possibly re-adding the menu_from_apps list on each request)
+    menu_list = list(getattr(settings, menu_name, defaults.MENU_NOT_FOUND))
     menu_from_apps = get_menu_from_apps(menu_name)
     # If there isn't a menu on settings but there is menu from apps we built menu from apps
     if menu_list == defaults.MENU_NOT_FOUND and menu_from_apps:
