@@ -13,8 +13,8 @@ dictionaries to generate menu items
 Features:
 ---------
 
--  Tested support to Python 3.4, 3.5, 3.6
--  Tested support to Django 1.8, 1.9, 1.10, 1.11, 2.0
+-  Tested support to Python 3.4, 3.5, 3.6, 3.7, 3.8
+-  Tested support to Django 1.8, 1.9, 1.10, 1.11, 2.0, 2.2, 3.0, 3.1
 -  No database
 -  Support unlimited menus
 -  Icons support

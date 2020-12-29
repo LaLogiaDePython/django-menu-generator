@@ -1,0 +1,4 @@
+tox
+tox-pyenv
+coverage
+flake8
