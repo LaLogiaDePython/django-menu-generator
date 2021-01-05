@@ -9,3 +9,5 @@ Contributors
 ============
 
 `Jonathan Weth <https://github.com/hansegucker>`__ - dev@jonathanweth.de
+
+`Dominik George <https://www.openhub.net/accounts/Natureshadow>`__ - nik@naturalnet.de

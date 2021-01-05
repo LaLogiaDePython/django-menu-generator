@@ -5,9 +5,9 @@ from django.core.exceptions import ImproperlyConfigured
 from .utils import get_callable, parse_url
 
 if django.VERSION >= (1, 10):  # pragma: no cover
-    from django.urls import reverse, NoReverseMatch
+    from django.urls import resolve, reverse, NoReverseMatch
 else:
-    from django.core.urlresolvers import reverse, NoReverseMatch
+    from django.core.urlresolvers import resolve, reverse, NoReverseMatch
 
 
 class MenuBase(object):
@@ -83,12 +83,20 @@ class MenuBase(object):
         related_urls = item_dict.get('related_urls', [])
         return [parse_url(url) for url in related_urls]
 
+    def _get_related_views(self, item_dict):
+        """
+        Given a menu item dictionary, it returns the relateds viewss or an empty list.
+        """
+        related_views = item_dict.get('related_views', [])
+        return related_views
+
     def _is_selected(self, item_dict):
         """
         Given a menu item dictionary, it returns true if `url` is on path,
         unless the item is marked as a root, in which case returns true if `url` is part of path.
 
         If related URLS are given, it also returns true if one of the related URLS is part of path.
+        If related views are given, it also returns true if the path maps to one of these views.
         """
         url = self._get_url(item_dict)
         if self._is_root(item_dict) and url in self.path:
@@ -100,6 +108,9 @@ class MenuBase(object):
             for related_url in self._get_related_urls(item_dict):
                 if related_url in self.path:
                     return True
+            # Resolve URL and check if it relates to a related views
+            if resolve(self.path).func in self._get_related_views(item_dict):
+                return True
         return False
 
     def _is_root(self, item_dict):

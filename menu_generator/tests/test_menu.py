@@ -2,6 +2,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpRequest
 from django.test import TestCase
 
+from .urls import testview
 from .utils import TestUser, is_main_site, is_paid_user
 from ..menu import MenuBase
 from ..templatetags.menu_generator import get_menu
@@ -296,6 +297,51 @@ class MenuTestCase(TestCase):
                         "name": "child2",
                         "url": 'named_url',
                         "related_urls": ["/groups/"]
+                    },
+                ],
+            }
+        ]
+        nav = self.menu.generate_menu(list_dict)
+
+        self.assertEqual(len(nav), 1)
+        self.assertEqual(nav[0]["selected"], True)
+        self.assertEqual(nav[0]["submenu"][0]["selected"], True)
+        self.assertEqual(nav[0]["submenu"][1]["selected"], False)
+
+    def test_generate_menu_selected_related_views_simple(self):
+        self.request.user = TestUser(authenticated=True)
+        self.request.path = "/known-view/"
+        self.menu.save_user_state(self.request)
+        list_dict = [
+            {
+                "name": "parent1",
+                "url": "/user/account/",
+                "related_views": [testview],
+            }
+        ]
+        nav = self.menu.generate_menu(list_dict)
+
+        self.assertEqual(len(nav), 1)
+        self.assertEqual(nav[0]["selected"], True)
+
+    def test_generate_menu_selected_related_views_submenu(self):
+        self.request.user = TestUser(authenticated=True)
+        self.request.path = "/known-view/"
+        self.menu.save_user_state(self.request)
+        list_dict = [
+            {
+                "name": "parent1",
+                "url": "/user/account/",
+                "submenu": [
+                    {
+                        "name": "child1",
+                        "url": '/user/account/profile/',
+                        "related_views": [testview]
+                    },
+                    {
+                        "name": "child2",
+                        "url": 'named_url',
+                        "related_views": []
                     },
                 ],
             }

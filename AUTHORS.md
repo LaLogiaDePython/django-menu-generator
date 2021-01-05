@@ -8,3 +8,4 @@ Val Kneeman under the name [django-menuware](https://github.com/un33k/django-men
 
 ## Contributors:
 * Jonathan Weth - dev@jonathanweth.de
+* Dominik George - nik@naturalnet.de
