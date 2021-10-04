@@ -114,7 +114,7 @@ class MenuBase(object):
         can be used as breadcrumbs
         """
         for item in menu_list:
-            if item['submenu']:
+            if not item['selected'] and item['submenu']:
                 item['selected'] = self._process_breadcrums(item['submenu'])
             if item['selected']:
                 return True
